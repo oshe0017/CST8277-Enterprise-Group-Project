@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,20 +29,26 @@ import jakarta.persistence.Table;
 /**
  * Role class used for (JSR-375) Jakarta EE Security authorization/authentication
  */
-//TODO SR01 - Make this into JPA entity and add all necessary annotations inside the class.
+@Entity(name = "SecurityRole")
+@Table(name = "security_role")
+@NamedQuery(name = SecurityRole.SECURITY_ROLE_BY_NAME, query = "SELECT sr FROM SecurityRole sr WHERE sr.roleName = :param1")
 public class SecurityRole implements Serializable {
     /** Explicit set serialVersionUID */
     private static final long serialVersionUID = 1L;
     
 	public static final String SECURITY_ROLE_BY_NAME = "SecurityRole.RoleByName";
 
-    //TODO SR02 - Add annotations.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     protected int id;
     
-    //TODO SR03 - Add annotations.
+    @Basic(optional = false)
+    @Column(name = "name", nullable = false, length = 45, unique = true)
     protected String roleName;
     
-    //TODO SR04 - Add annotations.
+    @ManyToMany(mappedBy = "roles", fetch = jakarta.persistence.FetchType.LAZY)
+    @JsonIgnore
     protected Set<SecurityUser> users = new HashSet<SecurityUser>();
 
     public SecurityRole() {

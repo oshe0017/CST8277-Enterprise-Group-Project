@@ -111,7 +111,7 @@ public class StudentResource {
     public Response updateStudentById(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, Student studentWithUpdates) {
     	Response response = null;
     	Student updatedStudent = service.updateStudentById(id, studentWithUpdates);
-    	response = Response.ok(updatedStudent).build();
+    	response = Response.status(updatedStudent == null ? Status.NOT_FOUND : Status.OK).entity(updatedStudent).build();
     	return response;
     }
     

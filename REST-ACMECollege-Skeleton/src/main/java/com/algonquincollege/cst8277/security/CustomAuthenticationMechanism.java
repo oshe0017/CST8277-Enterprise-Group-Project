@@ -70,6 +70,9 @@ public class CustomAuthenticationMechanism implements HttpAuthenticationMechanis
             else {
                 result = httpMessageContext.responseUnauthorized();
             }
+        } else {
+            // No Authorization header provided - challenge the client to provide credentials
+            result = httpMessageContext.responseUnauthorized();
         }
         return result;
     }

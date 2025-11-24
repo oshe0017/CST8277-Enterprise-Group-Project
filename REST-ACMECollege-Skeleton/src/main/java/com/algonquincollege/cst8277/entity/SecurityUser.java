@@ -14,8 +14,27 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.algonquincollege.cst8277.entity.SecurityUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-//TODO SU01 - Make this into JPA entity and add all the necessary annotations inside the class.
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity(name = "SecurityUser")
+@Table(name = "security_user")
+@NamedQuery(name = SecurityUser.SECURITY_USER_BY_NAME, query = "SELECT su FROM SecurityUser su LEFT JOIN FETCH su.roles LEFT JOIN FETCH su.student WHERE su.username = :param1")
+@NamedQuery(name = SecurityUser.SECURITY_USER_BY_STUDENT_ID, query = "SELECT su FROM SecurityUser su LEFT JOIN FETCH su.roles LEFT JOIN FETCH su.student WHERE su.student.id = :param1")
 public class SecurityUser implements Serializable, Principal {
   /** Explicit set serialVersionUID */
   private static final long serialVersionUID = 1L;
@@ -23,19 +42,29 @@ public class SecurityUser implements Serializable, Principal {
   public static final String SECURITY_USER_BY_NAME = "SecurityUser.userByName";
   public static final String SECURITY_USER_BY_STUDENT_ID = "SecurityUser.userByStudentId";
 
-  //TODO SU02 - Add annotations.
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "user_id")
   protected int id;
   
-  //TODO SU03 - Add annotations.
+  @Basic(optional = false)
+  @Column(name = "username", nullable = false, length = 100, unique = true)
   protected String username;
   
-  //TODO SU04 - Add annotations.
+  @Basic(optional = false)
+  @Column(name = "password_hash", nullable = false, length = 256)
+  @JsonIgnore
   protected String pwHash;
   
-  //TODO SU05 - Add annotations.
+  @OneToOne(optional = true, fetch = jakarta.persistence.FetchType.LAZY)
+  @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = true)
   protected Student student;
   
-  //TODO SU06 - Add annotations.
+  @ManyToMany(fetch = jakarta.persistence.FetchType.LAZY)
+  @JoinTable(name = "user_has_role",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+  @JsonSerialize(using = com.algonquincollege.cst8277.rest.serializer.SecurityRoleSerializer.class)
   protected Set<SecurityRole> roles = new HashSet<SecurityRole>();
 
   public SecurityUser() {

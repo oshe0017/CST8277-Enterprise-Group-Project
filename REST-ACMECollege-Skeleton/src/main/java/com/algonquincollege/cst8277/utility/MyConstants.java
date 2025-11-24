@@ -41,8 +41,10 @@ public interface MyConstants {
     public static final String CREDENTIAL_RESOURCE_NAME = "credential";
     public static final String STUDENT_RESOURCE_NAME =  "student";
     public static final String PROGRAM_RESOURCE_PATH = SLASH + "program";
-    
-    //TODO MC01 - Add your own constants here.
+    public static final String COURSE_RESOURCE_NAME = "course";
+    public static final String PROFESSOR_RESOURCE_NAME = "professor";
+    public static final String COURSE_REGISTRATION_RESOURCE_NAME = "courseRegistration";
+    public static final String STUDENT_CLUB_RESOURCE_NAME = "studentClub";
 
     
     

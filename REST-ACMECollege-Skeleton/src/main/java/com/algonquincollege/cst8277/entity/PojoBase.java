@@ -15,22 +15,34 @@ import java.util.Objects;
  * Abstract class that is base of (class) hierarchy for all @Entity classes
  */
 
-//TODO PB01 - Add annotation to define this class as superclass of all entities.  Please see lecture slides.
-//TODO PB02 - Add annotation to place all JPA annotations on fields.
-//TODO PB03 - Add annotation for listener class.
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
+
+@MappedSuperclass
+@Access(AccessType.FIELD)
+@EntityListeners(PojoListener.class)
 public abstract class PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// TODO PB04 - Add missing annotations.
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id;
 
-	// TODO PB05 - Add missing annotations.
+	@Version
+	@Column(nullable = false)
 	protected int version = 1;
 
-	// TODO PB06 - Add missing annotations (hint, is this column on DB?).
+	@Column(name = "created")
 	protected LocalDateTime created;
 
-	// TODO PB07 - Add missing annotations (hint, is this column on DB?).
+	@Column(name = "updated")
 	protected LocalDateTime updated;
 
 	public int getId() {

@@ -101,14 +101,9 @@ public class Student extends PojoBase implements Serializable {
 	protected Set<CourseRegistration> courseRegistrations = new HashSet<>();
     
 	// Hint - @ManyToMany is used to define M:N relationship between this entity and another.
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    // Hint - @JoinTable is used to specify the mapping of associations.  It is applied to the owning side of an association.
-    // Hint - @JoinTable is typically used in the mapping of many-to-many and unidirectional one-to-many associations.  It may also be used to map bidirectional many-to-one/one-to-many associations, unidirectional many-to-one relationships, and one-to-one associations (both bidirectional and unidirectional).
-    // Hint - When a join table is used in mapping a relationship with an embeddable class on the owning side of the relationship, the containing entity rather than the embeddable class is considered the owner of the relationship.
-    // Hint - If the JoinTable annotation is missing, the default values of the annotation elements apply.  The name of the join table is assumed to be the table names of the associated primary tables concatenated together (owning side first) using an underscore.
-    @JoinTable(name="club_membership",
-    joinColumns=@JoinColumn(name="student_id", referencedColumnName="id"),
-    inverseJoinColumns=@JoinColumn(name="club_id", referencedColumnName="club_id"))
+    // Hint - In bidirectional ManyToMany, only one side should have @JoinTable (the owning side).
+    // Hint - The inverse side should use mappedBy to reference the owning side's field name.
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "studentMembers")
 	// Hint - @JsonIgnore is used to mark a field or method within a Java class that should be ignored during JSON serialization and deserialization processes.
     @JsonIgnore
     protected Set<StudentClub> studentClubs = new HashSet<StudentClub>();
