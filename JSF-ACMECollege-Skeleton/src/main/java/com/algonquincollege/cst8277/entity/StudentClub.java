@@ -57,7 +57,7 @@ public class StudentClub extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static final String ALL_STUDENT_CLUBS_QUERY = "StudentClub.findAll";
-
+	
 	// TODO SC04 - Add the missing annotations.
 	@Basic(optional = false)
 	@Column(name = "name", nullable = false, length = 100, unique = true)
