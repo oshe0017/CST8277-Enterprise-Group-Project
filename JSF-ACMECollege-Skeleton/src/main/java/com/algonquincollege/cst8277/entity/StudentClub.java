@@ -47,25 +47,42 @@ import com.algonquincollege.cst8277.entity.NonAcademic;
 //TODO SC01 - Add the missing annotations.
 //TODO SC02 - StudentClub has subclasses Academic and NonAcademic.  Look at lecture slides for InheritanceType.
 //TODO SC03 - Do we need a mapped super class?  If so, which one?
-public class StudentClub implements Serializable {
+@Entity(name = "StudentClub")
+@Table(name = "student_club")
+@AttributeOverride(name = "id", column = @Column(name = "club_id"))
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "academic", discriminatorType = DiscriminatorType.INTEGER)
+@NamedQuery(name = StudentClub.ALL_STUDENT_CLUBS_QUERY, query = "SELECT DISTINCT sc FROM StudentClub sc LEFT JOIN FETCH sc.studentMembers")
+public class StudentClub extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static final String ALL_STUDENT_CLUBS_QUERY = "StudentClub.findAll";
 
 	// TODO SC04 - Add the missing annotations.
+	@Basic(optional = false)
+	@Column(name = "name", nullable = false, length = 100, unique = true)
 	protected String name;
 
 	// TODO SC05 - Add the missing annotations.
+	@Basic(optional = false)
+	@Column(name = "description", nullable = false, length = 100)
 	protected String desc;
 
 	// TODO SC06 - Add the missing annotations.
+	@Transient
 	protected boolean isAcademic;
 
 	// TODO SC07 - Add the M:N annotation.  What should be the cascade and fetch types?
 	// TODO SC08 - Add other missing annotations.
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinTable(name = "club_membership",
+		joinColumns = @JoinColumn(name = "club_id"),
+		inverseJoinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"))
+	@JsonIgnore
 	protected Set<Student> studentMembers = new HashSet<Student>();
 	
 	// TODO SC09 - Add the missing annotations.
+	@Transient
 	protected boolean editable = false;
 
 	public StudentClub() {
