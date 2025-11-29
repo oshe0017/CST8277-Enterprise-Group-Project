@@ -358,7 +358,7 @@
 
         <!-- add your different panel groups here -->
         <!-- panel group for professor management -->
-        <h:panelGroup rendered="#{(externalContext.userPrincipal ne null) and (mainController.optionChosen == 'Professor Management')}"> 
+		        <h:panelGroup rendered="#{(externalContext.userPrincipal ne null) and (mainController.optionChosen == 'Professor Management')}"> 
           <h:panelGroup rendered="#{request.isUserInRole('ADMIN_ROLE')}">
             <h:form id="addProfessor">
               <h:commandLink action="#{professorController.toggleAdding()}">
@@ -390,9 +390,10 @@
                     </h:inputText>
                   </h:panelGroup>
                   <h:message for="new_lastName" style="color:red" />
-                  <h:panelGroup class="input-group">
+				  
+                <h:panelGroup class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="degree-addon"><i class="fa fa-graduation-cap fa-fw"/></span>
+                      <span class="input-group-text" id="degree-addon"><i class="fa fa-edit fa-fw"/></span>
                     </div>
                     <h:inputText type="text" id="new_degree" styleClass="form-control placeholder-darkgray"
                       aria-describedby="degree-addon"
@@ -402,6 +403,7 @@
                     </h:inputText>
                   </h:panelGroup>
                   <h:message for="new_degree" style="color:red" />
+				  
                 </h:panelGrid>
                 <h:panelGrid id="actions" columns="2" cellpadding="10">
                   <h:commandLink action="#{newProfessor.addProfessor()}" rendered="#{professorController.adding}">
@@ -446,7 +448,7 @@
                   <br/>
                   <h:message for="lastName_editable" style="color:red" />
                 </h:column>
-                <h:column>
+				<h:column>
                   <f:facet name="header">#{uiconsts['columnLabel_Degree']}</f:facet>
                   <h:outputText value="#{professor.degree}" rendered="#{not professor.editable}" />
                   <h:inputText id="degree_editable" size="12" validatorMessage="#{uiconsts['enter_valid_string']}"
@@ -481,7 +483,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&#8855;</span></button>
                           </div>
                           <div class="modal-body">
-                            <p>#{uiconsts['confirmProfessorDelete']} (#{professor.id})?</p>
+                            <p>#{uiconsts['confirmProfessorDelete']} (#{professor.id})</p>
                           </div>
                           <div class="modal-footer">
                             <div class="form-group last text-right">
@@ -506,11 +508,6 @@
           </h:form>
           <h:messages globalOnly="true" layout="table" styleClass="alert alert-danger"/>
         </h:panelGroup>
-
-
-
-        
-
         
       </div>
     </div>
