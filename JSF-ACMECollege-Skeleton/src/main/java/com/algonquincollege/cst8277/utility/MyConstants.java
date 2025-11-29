@@ -56,6 +56,7 @@ public interface MyConstants {
     
     //TODO Add your own resource constants here
     public static final String PROFESSOR_RESOURCE_NAME = "professor";
+    public static final String COURSE_RESOURCE_NAME = "course";
     
     
     public static final String ACCESS_REQUIRES_AUTHENTICATION =

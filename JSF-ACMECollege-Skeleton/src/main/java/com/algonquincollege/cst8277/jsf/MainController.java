@@ -41,6 +41,9 @@ public class MainController implements Serializable, MyConstants {
     @Inject
     protected ProfessorController professorController;
     
+    @Inject
+    protected CourseController courseController;
+    
     
     protected String optionChosen = "None";
     protected List<String> options = Stream.of(NONE, STUDENT_MANAGEMENT, COURSE_MANAGEMENT, PROFESSOR_MANAGEMENT, STUDENT_CLUB_MANAGEMENT, COURSE_REGISTRATION, ASSIGN_PROFESSOR, ASSIGN_GRADE, CLUB_MEMBERSHIP_REGISTRATION).collect(Collectors.toList());
@@ -72,6 +75,7 @@ public class MainController implements Serializable, MyConstants {
     		//TODO Add your own cases here
     		case PROFESSOR_MANAGEMENT: professorController.loadProfessors();
     		break;
+    		case COURSE_MANAGEMENT: courseController.loadCourses();
     		
     	}
     }
