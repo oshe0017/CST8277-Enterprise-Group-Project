@@ -49,7 +49,7 @@ public interface MyConstants {
     public static final String REST_APPLICATION_PATH = SLASH + "api" + SLASH + "v1";
 
     // Resource constants
-    public static final String APPLICATION_CONTEXT_ROOT = SLASH + "REST-ACMECollege-Solution";
+    public static final String APPLICATION_CONTEXT_ROOT = SLASH + "REST-ACMECollege-Skeleton";
     public static final String CREDENTIAL_RESOURCE_NAME = "credential";
     public static final String STUDENT_RESOURCE_NAME =  "student";
     public static final String PROGRAM_RESOURCE_PATH = SLASH + "program";
