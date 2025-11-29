@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
@@ -46,10 +48,12 @@ public abstract class PojoBase implements Serializable {
 
 	// TODO PB06 - Add missing annotations (hint, is this column on DB?).
 	@Column(name = "created")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	protected LocalDateTime created;
 
 	// TODO PB07 - Add missing annotations (hint, is this column on DB?).
 	@Column(name = "updated")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	protected LocalDateTime updated;
 
 	public int getId() {

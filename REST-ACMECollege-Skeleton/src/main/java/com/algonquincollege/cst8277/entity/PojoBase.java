@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Abstract class that is base of (class) hierarchy for all @Entity classes
  */
@@ -40,9 +42,11 @@ public abstract class PojoBase implements Serializable {
 	protected int version = 1;
 
 	@Column(name = "created")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	protected LocalDateTime created;
 
 	@Column(name = "updated")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	protected LocalDateTime updated;
 
 	public int getId() {
