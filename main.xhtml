@@ -1,0 +1,23 @@
+<h:form id="mainForm">
+    <h:panelGrid columns="2" styleClass="toolbar">
+        <h:outputText value="ACME College (For Admin Use Only)"/>
+        <h:outputText value="#{loginBean.welcomeMessage}" style="text-align:right"/>
+    </h:panelGrid>
+
+    <h:selectOneMenu value="#{mainViewBean.currentView}">
+        <f:selectItem itemLabel="#{bundle['view.none']}" itemValue="none"/>
+        <f:selectItem itemLabel="#{bundle['view.student']}" itemValue="student"/>
+        <f:selectItem itemLabel="#{bundle['view.course']}" itemValue="course"/>
+        <f:selectItem itemLabel="#{bundle['view.professor']}" itemValue="professor"/>
+        <f:selectItem itemLabel="#{bundle['view.studentclub']}" itemValue="studentclub"/>
+        <f:selectItem itemLabel="#{bundle['view.coursereg']}" itemValue="coursereg"/>
+        <f:selectItem itemLabel="#{bundle['view.assignprof']}" itemValue="assignprof"/>
+        <f:selectItem itemLabel="#{bundle['view.assigngrade']}" itemValue="assigngrade"/>
+        <f:selectItem itemLabel="#{bundle['view.clubmembership']}" itemValue="clubmembership"/>
+    </h:selectOneMenu>
+
+    <h:commandButton value="#{bundle['label.submit']}" action="#{mainViewBean.refresh}"/>
+
+    <ui:include src="#{mainViewBean.currentViewPage}"/>
+
+</h:form>
